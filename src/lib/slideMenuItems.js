@@ -36,7 +36,7 @@ module.exports = [
     icon: 'fa fa-circle-o',
     name: '短信记录',
     router: {
-      name: 'ChartExample'
+      name: 'SMSChatRecord'
     }
   },
   {

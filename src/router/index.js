@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'components/Hello.vue'
 import Sample from 'components/Sample.vue'
+import SMSChatRecord from 'components/SMSChatRecord.vue'
 import DashboardV1 from 'examples/Dashboard.v1.vue'
 import DashboardV2 from 'examples/Dashboard.v2.vue'
 import DashboardV10 from 'examples/Dashboard.v10.vue'
@@ -38,6 +39,11 @@ export default new Router({
       path: '/sample',
       name: 'Sample',
       component: Sample
+    },
+    {
+      path: '/chatrecord',
+      name: 'SMSChatRecord',
+      component: SMSChatRecord
     },
     {
       path: '/dashboard/v1',
