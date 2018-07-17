@@ -52,8 +52,6 @@
           </div>
         </row>
       </div>
-    </row>
-    <row>
       <div class="col-md-4">
         <va-info-box
           wrapBgColor="bg-yellow"

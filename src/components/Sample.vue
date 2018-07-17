@@ -18,141 +18,37 @@
 
 
     <row>
-      <div class="col-md-12">
-        <div class="box">
-          <div class="box-header with-border">
-            <h3 class="box-title">Monthly Recap Report</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
-              <div class="btn-group">
-                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-wrench"></i></button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </div>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <row>
-              <div class="col-md-8">
-                <p class="text-center">
-                  <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                </p>
-
-                <div class="chart">
-                  <!-- Sales Chart Canvas -->
-                  <canvas id="salesChart" style="height: 180px;"></canvas>
-                </div>
-                <!-- /.chart-responsive -->
-              </div>
-              <!-- /.col -->
-              <div class="col-md-4">
-                <p class="text-center">
-                  <strong>Goal Completion</strong>
-                </p>
-
-                <div class="progress-group">
-                  <span class="progress-text">Add Products to Cart</span>
-                  <span class="progress-number"><b>160</b>/200</span>
-
-                  <div class="progress sm">
-                    <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
-                  </div>
-                </div>
-                <!-- /.progress-group -->
-                <div class="progress-group">
-                  <span class="progress-text">Complete Purchase</span>
-                  <span class="progress-number"><b>310</b>/400</span>
-
-                  <div class="progress sm">
-                    <div class="progress-bar progress-bar-red" style="width: 80%"></div>
-                  </div>
-                </div>
-                <!-- /.progress-group -->
-                <div class="progress-group">
-                  <span class="progress-text">Visit Premium Page</span>
-                  <span class="progress-number"><b>480</b>/800</span>
-
-                  <div class="progress sm">
-                    <div class="progress-bar progress-bar-green" style="width: 80%"></div>
-                  </div>
-                </div>
-                <!-- /.progress-group -->
-                <div class="progress-group">
-                  <span class="progress-text">Send Inquiries</span>
-                  <span class="progress-number"><b>250</b>/500</span>
-
-                  <div class="progress sm">
-                    <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
-                  </div>
-                </div>
-                <!-- /.progress-group -->
-              </div>
-              <!-- /.col -->
-            </row>
-            <!-- /.row -->
-          </div>
-          <!-- ./box-body -->
-          <div class="box-footer">
-            <row>
-              <div class="col-sm-3 col-xs-6">
-                <div class="description-block border-right">
-                  <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-                  <h5 class="description-header">$35,210.43</h5>
-                  <span class="description-text">TOTAL REVENUE</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-3 col-xs-6">
-                <div class="description-block border-right">
-                  <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
-                  <h5 class="description-header">$10,390.90</h5>
-                  <span class="description-text">TOTAL COST</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-3 col-xs-6">
-                <div class="description-block border-right">
-                  <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-                  <h5 class="description-header">$24,813.53</h5>
-                  <span class="description-text">TOTAL PROFIT</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-              <!-- /.col -->
-              <div class="col-sm-3 col-xs-6">
-                <div class="description-block">
-                  <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
-                  <h5 class="description-header">1200</h5>
-                  <span class="description-text">GOAL COMPLETIONS</span>
-                </div>
-                <!-- /.description-block -->
-              </div>
-            </row>
-            <!-- /.row -->
-          </div>
-          <!-- /.box-footer -->
-        </div>
+      <div class="col-md-8">
+          <p class='text-center'>
+            <strong>短信发送情况统计</strong>
+          </p>
+          <va-chart
+            :chart-config='barChartConfig'
+          >
+          </va-chart>
         <!-- /.box -->
       </div>
-      <!-- /.col -->
+      <div class="col-md-4">
+        <sms-record-box v-for="item in messages"
+                        v-bind:wrap-bg-color="item.wrapBgColor"
+                        v-bind:bg-icon="item.bgIcon"
+                        v-bind:text="item.text"
+                        v-bind:number="item.number"
+                        v-bind:is-progress="item.isProgress"
+                        v-bind:number-type="item.numberType"
+                        v-bind:sender="item.sender"
+                        v-bind:percentage="item.percentage"
+        ></sms-record-box>
+      </div>
     </row>
     <!-- /.row -->
   </section>
 </template>
 
 <script>
+  import VAChart from '../components/VAChart'
+  import SMSRecordBox from '../widgets/SMSRecordBox'
+
   var data = {
     indexes: [
       {
@@ -179,10 +75,75 @@
         name: '用户4',
         count: 20
       }
+    ],
+    barChartConfig: {
+      type: 'bar',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+          {
+            label: '发送短信数',
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1,
+            data: [65, 59, 80, 81, 56, 55, 40]
+          }
+        ]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        }
+      }
+    },
+    messages: [
+      {
+        wrapBgColor: 'bg-yellow',
+        bgIcon: 'ion ion-ios-pricetag-outline',
+        text: '短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111',
+        number: 5200,
+        isProgress: true,
+        numberType: 'comma',
+        sender: '张三',
+        percentage: 50
+      },
+      {
+        wrapBgColor: 'bg-green',
+        bgIcon: 'ion ion-ios-pricetag-outline',
+        text: '短信内容短信内容2222',
+        number: 92050,
+        isProgress: true,
+        numberType: 'comma',
+        sender: '李四',
+        percentage: 20
+      }
     ]
   }
   export default {
     name: 'sample',
+    components: {
+      'va-chart': VAChart,
+      'sms-record-box': SMSRecordBox
+    },
     data () {
       return data
     },
