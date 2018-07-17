@@ -3,7 +3,7 @@
   <!-- DIRECT CHAT -->
   <div class="box direct-chat" :class="[boxColor, directChatColor]">
     <div class="box-header with-border">
-      <h3 class="box-title">Direct Chat</h3>
+      <h3 class="box-title">{{title}}</h3>
 
       <div class="box-tools pull-right">
         <span data-toggle="tooltip" title="3 New Messages" class="badge" :class="badgeColor">3</span>
