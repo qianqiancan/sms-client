@@ -38,29 +38,5 @@ module.exports = [
     router: {
       name: 'SMSChatRecord'
     }
-  },
-  {
-    type: 'item',
-    icon: 'fa fa-circle-o',
-    name: 'Alert',
-    router: {
-      name: 'AlertExample'
-    }
-  },
-  {
-    type: 'item',
-    icon: 'fa fa-circle-o',
-    name: 'Modal',
-    router: {
-      name: 'ModalExample'
-    }
-  },
-  {
-    type: 'item',
-    icon: 'fa fa-circle-o',
-    name: 'APIExample',
-    router: {
-      name: 'APIExample'
-    }
   }
 ]

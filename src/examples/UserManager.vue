@@ -5,6 +5,7 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <el-button @click="dialogFormVisible = true" plain>新增</el-button>
         <el-button type="primary" plain>导入</el-button>
+        <el-button type="primary" plain>编辑</el-button>
         <el-button type="success" plain>删除</el-button>
         <el-button type="danger" plain>全部删除</el-button>
       </div>
