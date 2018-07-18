@@ -18,6 +18,11 @@
         title="请输入短信内容："
         rowCount="20">
         </va-textarea-group>
+        <el-row type="flex" justify="right">
+          <el-col :span="6">
+            <el-button type="primary" label="right" plain>发送</el-button>
+          </el-col>
+        </el-row>
       </div>
     </row>
   </div>
