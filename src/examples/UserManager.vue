@@ -16,6 +16,10 @@
           style="width: 100%"
           :row-class-name="tableRowClassName">
           <el-table-column
+            type="selection"
+            width="55">
+          </el-table-column>
+          <el-table-column
             prop="date"
             label="日期"
             width="180">
