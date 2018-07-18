@@ -5,11 +5,14 @@ import './lib/script'
 import './lib/global'
 
 import Vue from 'vue'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import EventBus from './lib/eventBus.js'
 import axios from 'axios'
 
+Vue.use(ElementUI)
 Vue.prototype.$bus = EventBus
 Vue.prototype.$http = axios
 

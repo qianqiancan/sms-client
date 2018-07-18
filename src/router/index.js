@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from 'components/Hello.vue'
+// import Hello from 'components/Hello.vue'
 import Sample from 'components/Sample.vue'
 import SMSChatRecord from 'components/SMSChatRecord.vue'
 import DashboardV1 from 'examples/Dashboard.v1.vue'
@@ -12,6 +12,9 @@ import AlertExample from 'examples/AlertExample'
 import ModalExample from 'examples/ModalExample'
 import WidgetsExample from 'examples/WidgetsExample'
 import APIExample from 'examples/APIExample'
+import UserManager from 'examples/UserManager'
+import GroupManager from 'examples/GroupManager'
+import SendMessage from 'examples/SendMessage'
 
 // UI Element Groups
 import General from 'pages/ui-elements/General.vue'
@@ -32,13 +35,28 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Sample',
+      component: Sample
     },
     {
       path: '/sample',
       name: 'Sample',
       component: Sample
+    },
+    {
+      path: '/usermanager',
+      name: 'UserManager',
+      component: UserManager
+    },
+    {
+      path: '/sendmessage',
+      name: 'SendMessage',
+      component: SendMessage
+    },
+    {
+      path: '/groupmanager',
+      name: 'GroupManager',
+      component: GroupManager
     },
     {
       path: '/chatrecord',

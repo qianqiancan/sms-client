@@ -12,7 +12,7 @@ module.exports = [
     icon: 'fa fa-circle-o',
     name: '用户管理',
     router: {
-      name: 'DashboardV1'
+      name: 'UserManager'
     }
   },
   {
@@ -20,7 +20,7 @@ module.exports = [
     icon: 'fa fa-circle-o',
     name: '分组管理',
     router: {
-      name: 'DashboardV2'
+      name: 'GroupManager'
     }
   },
   {
@@ -28,7 +28,7 @@ module.exports = [
     icon: 'fa fa-circle-o',
     name: '发送短信',
     router: {
-      name: 'InfoBoxExample'
+      name: 'SendMessage'
     }
   },
   {
