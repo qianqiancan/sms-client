@@ -1,13 +1,15 @@
 <template>
   <div class="direct-chat-msg" :class="isMine?'':'right'">
     <div class="direct-chat-info clearfix">
-      <span class="direct-chat-name" :class="isMine?'pull-right':'pull-left'">{{ name }}</span>
-      <span class="direct-chat-timestamp pull-right" :class="isMine?'pull-left':'pull-right'">{{ parseDate }}</span>
+      <span class="direct-chat-timestamp pull-right" :class="isMine?'pull-right':'pull-left'">{{ parseDate }}</span>
     </div>
     <!-- /.direct-chat-info -->
     <img class="direct-chat-img" :src="profileImage" alt="message user image"><!-- /.direct-chat-img -->
     <div class="direct-chat-text">
       {{ message }}
+    </div>
+    <div class="direct-chat-info clearfix">
+      <span class="direct-chat-name" :class="isMine?'pull-left':'pull-right'">{{ name }}</span>
     </div>
     <!-- /.direct-chat-text -->
   </div>

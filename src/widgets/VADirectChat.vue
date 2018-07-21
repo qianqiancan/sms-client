@@ -4,7 +4,6 @@
   <div class="box direct-chat" :class="[boxColor, directChatColor]">
     <div class="box-header with-border">
       <h3 class="box-title">{{title}}</h3>
-
       <div class="box-tools pull-right">
         <span data-toggle="tooltip" title="3 New Messages" class="badge" :class="badgeColor">3</span>
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -18,8 +17,7 @@
     <!-- /.box-header -->
     <div class="box-body">
       <!-- Conversations are loaded here -->
-      <div class="direct-chat-messages">
-
+      <div class="direct-chat-messages" style="height: 500px;" id="dialogue_box">
         <va-direct-chat-item
           v-for="item in talkList"
           :key="item.name"
@@ -29,7 +27,6 @@
           :message="item.message"
           :isMine="item.isMine"
         ></va-direct-chat-item>
-
       </div>
       <!--/.direct-chat-messages-->
 
@@ -50,11 +47,11 @@
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
-      <form action="#" method="post">
+      <form action="chatrecord" method="post" onsubmit="return false;">
         <div class="input-group">
-          <input type="text" name="message" :placeholder="placeholder" class="form-control">
+          <input type="text" :name="chatcontent" :placeholder="placeholder" class="form-control" v-model="chatcontent" @keyup="sendEeter">
               <span class="input-group-btn">
-                <button type="button" class="btn btn-warning btn-flat">Send</button>
+                <button type="button" class="btn btn-warning btn-flat" @click="btnSend">Send</button>
               </span>
         </div>
       </form>
@@ -92,6 +89,27 @@ export default {
     placeholder: {
       type: String,
       default: 'Type Message ...'
+    }
+  },
+  data () {
+    return {
+      chatcontent: ''
+    }
+  },
+  methods: {
+    information () {
+      if (this.chatcontent !== '') {
+        this.$emit('send-chat-content', this.chatcontent)
+        this.chatcontent = ''
+      }
+    },
+    btnSend () {
+      this.information()
+    },
+    sendEeter (ev) {
+      if (ev.keyCode === 13) {
+        this.information()
+      }
     }
   },
   computed: {
@@ -134,6 +152,12 @@ export default {
   },
   created () {
 
+  },
+  updated () {
+    this.$nextTick(function () {
+      var div = document.getElementById('dialogue_box')
+      div.scrollTop = div.scrollHeight
+    })
   },
   components: {
     'va-direct-chat-item': VADirectChatItem,

@@ -38,5 +38,13 @@ module.exports = [
     router: {
       name: 'SMSChatRecord'
     }
+  },
+  {
+    type: 'item',
+    icon: 'fa fa-circle-o',
+    name: '表格',
+    router: {
+      name: 'UserndyName'
+    }
   }
 ]
