@@ -119,7 +119,27 @@
       {
         wrapBgColor: 'bg-yellow',
         bgIcon: 'ion ion-ios-pricetag-outline',
-        text: '短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111短信内容短信内容11111111',
+        text: '短信内容1111111短信内容',
+        number: 5200,
+        isProgress: true,
+        numberType: 'comma',
+        sender: '张三',
+        percentage: 50
+      },
+      {
+        wrapBgColor: 'bg-green',
+        bgIcon: 'ion ion-ios-pricetag-outline',
+        text: '短信内容短信内容2222',
+        number: 92050,
+        isProgress: true,
+        numberType: 'comma',
+        sender: '李四',
+        percentage: 20
+      },
+      {
+        wrapBgColor: 'bg-yellow',
+        bgIcon: 'ion ion-ios-pricetag-outline',
+        text: '短信内容1111111',
         number: 5200,
         isProgress: true,
         numberType: 'comma',

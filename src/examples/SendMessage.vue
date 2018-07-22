@@ -1,28 +1,35 @@
 <template>
   <div>
     <row>
-      <div class="col-md-4">
+      <div class="col-md-12">
+        <user-header></user-header>
+      </div>
+    </row>
+    <row>
+      <div class="col-md-4 demo-color-box bg-warning">
         <el-tree
           :data="data2"
           node-key="id"
           show-checkbox
-          :default-expanded-keys="[2, 3]"
+          :default-expanded-keys="[1, 1, 1]"
           :default-checked-keys="[5]"
           :props="defaultProps"
+          class="demo-color-box bg-warning"
           @node-click="btnGrouping">
         </el-tree>
       </div>
       <div class="col-md-8">
         <el-input
         type="textarea"
-        :rows="20"
+        :rows="10"
         title="请输入短信内容："
+        placeholder="选择用户输入您想要发送的内容，点击发送"
         rowCount="20" v-model="sendMastion.content">
         </el-input>
-        <el-row type="flex" justify="right">
-          <el-col :span="6">
-            <el-button type="primary" label="right" @click="btnSend" plain>发送</el-button>
-          </el-col>
+        <el-row type="flex" justify="right" class="text-center" style="margin-top: 10px; margin-bottom: 10px">
+          <div class="col-md-12">
+            <el-button type="primary" label="right" @click="btnSend" plain style="width: 100%">发送</el-button>
+          </div>
         </el-row>
       </div>
     </row>
@@ -35,9 +42,16 @@
 </template>
 
 <script>
+  // 头部
+  import UserHeader from './UserHeader.vue'
   import VATextareaGroup from '../components/VATextareaGroup'
   import UserDisplay from './UserDisplay.vue'
   export default {
+    components: {
+      'user-header': UserHeader,
+      'va-textarea-group': VATextareaGroup,
+      'user-display': UserDisplay
+    },
     data () {
       return {
         data2: [{
@@ -73,18 +87,18 @@
             grouping: '一级分组 1',
             name: '王小虎1',
             phone: '131111111111'
+          }],
+          children: [{
+            id: 4,
+            label: '二级 1-1',
+            children: [{
+              id: 9,
+              label: '三级 1-1-1'
+            }, {
+              id: 10,
+              label: '三级 1-1-2'
+            }]
           }]
-          // children: [{
-          //   id: 4,
-          //   label: '二级 1-1',
-          //   children: [{
-          //     id: 9,
-          //     label: '三级 1-1-1'
-          //   }, {
-          //     id: 10,
-          //     label: '三级 1-1-2'
-          //   }]
-          // }]
         }, {
           id: 2,
           label: '一级分组 2',
@@ -108,14 +122,14 @@
             grouping: '一级分组 2-4',
             name: '王小虎2',
             phone: '132222222222'
+          }],
+          children: [{
+            id: 5,
+            label: '二级 2-1'
+          }, {
+            id: 6,
+            label: '二级 2-2'
           }]
-          // children: [{
-          //   id: 5,
-          //   label: '二级 2-1'
-          // }, {
-          //   id: 6,
-          //   label: '二级 2-2'
-          // }]
         }, {
           id: 3,
           label: '一级分组 3',
@@ -179,7 +193,7 @@
           // }]
         }],
         // 用户列表的展示状态
-        userMsg: false,
+        userMsg: true,
         // 需要展示当前分组的下的用户数据
         userData: [],
         // 需要发送的数据源
@@ -215,10 +229,6 @@
       btnSend () {
         console.log(this.sendMastion)
       }
-    },
-    components: {
-      'va-textarea-group': VATextareaGroup,
-      'user-display': UserDisplay
     }
   }
 </script>

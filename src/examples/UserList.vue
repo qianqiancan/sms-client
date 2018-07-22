@@ -1,0 +1,44 @@
+<template>
+  <el-table
+    :data="content"
+    height="250"
+    style="width: 100%"
+    :default-sort = "{prop: 'date', order: 'descending'}"
+  >
+    <el-table-column
+      type="index"
+      label="序号"
+      width="100"
+      sortable>
+    </el-table-column>
+    <el-table-column
+      property="date"
+      label="日期"
+      width="180"
+      sortable>
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="姓名"
+      width="180"
+      sortable>
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="地址"
+      sortable>
+    </el-table-column>
+  </el-table>
+</template>
+<script>
+  export default {
+    props: {
+      content: []
+    },
+    data () {
+      return {
+
+      }
+    }
+  }
+</script>

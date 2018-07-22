@@ -1,13 +1,21 @@
 <template>
   <section class="content">
     <row>
-
-      <div class="col-md-12 col-sm-12 col-xs-12" slot-scope='scope'>
-        <el-button @click=" dialogFormVisible = true " plain>新增</el-button>
-        <el-button type="primary" plain>导入</el-button>
-        <el-button type="primary" @click="btnFormVisible" plain>{{saveName}}</el-button>
-        <el-button type="success" @click="removeData" plain>删除</el-button>
-        <el-button type="danger" @click=" tableData = [] " plain>全部删除</el-button>
+      <div class="col-md-12">
+        <user-header></user-header>
+      </div>
+    </row>
+    <row>
+      <div class="col-md-12 col-sm-12 col-xs-12" slot-scope='scope' style="margin-bottom: 20px;">
+        <div class="col-md-6">
+          <el-button @click=" dialogFormVisible = true " plain>新增</el-button>
+          <el-button type="primary" plain>导入</el-button>
+          <el-button type="primary" @click="btnFormVisible" plain>{{saveName}}</el-button>
+        </div>
+        <div class="col-md-6 text-right">
+          <el-button type="success" @click="removeData" plain>删除</el-button>
+          <el-button type="danger" @click=" tableData = [] " plain>全部删除</el-button>
+        </div>
       </div>
     </row>
     <row>
@@ -78,8 +86,14 @@
 </template>
 
 <script>
+  // 头部
+  import UserHeader from './UserHeader.vue'
   import UserEdit from './UserEdit.vue'
   export default {
+    components: {
+      'user-header': UserHeader,
+      'user-edit': UserEdit
+    },
     data: function () {
       return {
         dialogFormVisible: false,
@@ -221,9 +235,6 @@
           alert('请选中用户编辑！！')
         }
       }
-    },
-    components: {
-      'user-edit': UserEdit
     }
   }
 </script>
