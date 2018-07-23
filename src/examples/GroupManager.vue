@@ -25,11 +25,14 @@
     <row>
       <div class="col-md-12">
         <el-collapse accordion>
-          <el-collapse-item v-for="item in messages" style="padding-top: 20px;">
+          <el-collapse-item v-for="(item, index) in messages" style="padding-top: 20px;">
             <template slot="title">
               <div @click="btnUsershow(item)" v-model="neWshow" class="demo-color-box bg-success ndy-padding" :class="item.bgColor">
-                  <el-checkbox @change="handleCheckedCitiesChange(item)" v-model="item.neWshow"></el-checkbox>
+                <el-checkbox @change="handleCheckedCitiesChange(item)" v-model="item.neWshow"></el-checkbox>
                 <span v-show='!item.delivery'>{{item.name}}</span>
+                <el-button type="danger" @click="" class="pull-right" @click.stop style="margin-right: 8px; margin-top: 6px;" @click="item.content = []">全部删除</el-button>
+                <el-button type="danger" @click="btnUser(item, index)" class="pull-right" @click.stop style="margin-right: 8px; margin-top: 6px;">删除用户</el-button>
+                <el-button type="primary" @click="btnCreateUser(item, index)" class="pull-right" @click.stop style="margin-right: 0px; margin-top: 6px;">添加用户</el-button>
                 <!--<el-form v-show='item.delivery' :model="item" :rules="rules" ref="create">-->
                   <!--<el-form-item label="" prop="name">-->
                     <!--<el-input v-model="item.name" auto-complete="off"></el-input>-->
@@ -37,7 +40,7 @@
                 <!--</el-form>-->
               </div>
             </template>
-            <user-list :content="item.content"></user-list>
+              <user-list v-if="item.content" :content="item.content" @new-content="newContent"></user-list>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -48,6 +51,10 @@
     <!--<el-dialog title="编辑分组" :visible.sync="dialogFormVisible">-->
       <!--<edit-grouping :formVal="newmessages"></edit-grouping>-->
     <!--</el-dialog>-->
+    <el-dialog title="新增用户" :visible.sync="CreateUser ">
+      <!--@btn-cacel="btnCacel" @btn-deter="btnCacel"-->
+      <grouping-user-create :userList="userListData" :defaultIndex="defaultIndex" @btn-user-data="btnUserData"></grouping-user-create>
+    </el-dialog>
   </div>
 </template>
 
@@ -60,25 +67,36 @@
   import CreateGrouping from './CreateGrouping.vue'
   // 用户列表
   import UserList from './UserList.vue'
+  // 分组添加用户
+  import GroupingUserCreate from './GroupingUserCreate.vue'
+
   export default {
     components: {
       'user-header': UserHeader,
       'edit-grouping': EditGrouping,
       'create-grouping': CreateGrouping,
-      'user-list': UserList
+      'user-list': UserList,
+      'grouping-user-create': GroupingUserCreate
     },
     data: function () {
       return {
+        defaultIndex: [],    // 默认第几个元素选中
+        CreateIndex: '',    // 当前点击分组的索引值
+        messrMsg: false,    // 添加/删除用户状态
         CreateEdit: false,   // 添加分组
-        dialogFormVisible: false,  // 编辑分组
-        isIndeterminate: false,
-        checkAll: false,
+        CreateUser: false,  // 添加用户
+        isIndeterminate: false,   // 全选的不确定状态
+        checkAll: false,     // 全选状态
         show2: true,
         activeName: 1,
         // 初始化数据
         newmessages: [],
         // 初始化下标
         newIndex: [],
+        // 获取数据
+        userListData: [],
+        // 当前分组下用户数据初始化
+        GroupNewContent: [],
         messages: [
           {
             name: '组名1',
@@ -89,50 +107,50 @@
             delivery: false,
             content: [
               {
-                id: 1,
+                id: 101,
+                name: '王小虎1',
+                date: this.nweDate(),
+                address: '北京市朝阳区'
+              },
+              {
+                id: 201,
+                name: '王小虎2',
+                date: this.nweDate(),
+                address: '北京市朝阳区'
+              },
+              {
+                id: 103,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 104,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
-                name: '王小虎',
-                date: this.nweDate(),
-                address: '北京市朝阳区'
-              },
-              {
-                id: 1,
-                name: '王小虎',
-                date: this.nweDate(),
-                address: '北京市朝阳区'
-              },
-              {
-                id: 1,
+                id: 105,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
 
               },
               {
-                id: 1,
+                id: 106,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 107,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 108,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
@@ -148,25 +166,25 @@
             delivery: false,
             content: [
               {
-                id: 1,
+                id: 201,
+                name: '王小虎2',
+                date: this.nweDate(),
+                address: '北京市朝阳区'
+              },
+              {
+                id: 202,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 203,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
-                name: '王小虎',
-                date: this.nweDate(),
-                address: '北京市朝阳区'
-              },
-              {
-                id: 1,
+                id: 204,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
@@ -182,25 +200,25 @@
             delivery: false,
             content: [
               {
-                id: 1,
+                id: 301,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 302,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 303,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 304,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
@@ -216,25 +234,25 @@
             delivery: false,
             content: [
               {
-                id: 1,
+                id: 401,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 402,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 403,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 404,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
@@ -250,38 +268,32 @@
             delivery: false,
             content: [
               {
-                id: 1,
+                id: 501,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 502,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 503,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               },
               {
-                id: 1,
+                id: 504,
                 name: '王小虎',
                 date: this.nweDate(),
                 address: '北京市朝阳区'
               }
             ]
           }
-        ],
-        rules: {
-          name: [
-            {type: 'string', required: true, message: '请输入姓名', trigger: 'blur'},
-            {min: 1, max: 15, message: '长度在 1 到 15 个字符'}
-          ]
-        }
+        ]
       }
     },
     methods: {
@@ -347,7 +359,7 @@
           }
         }
       },
-      // 添加数据
+      // 添加分组
       deitContent (data) {
         console.log(data)
         this.CreateEdit = data.status
@@ -358,10 +370,111 @@
               neWshow: false,
               bgColor: data.content.bgColor,
               // 当前数据ID
-              codeId: data.content.codeId
+              codeId: data.content.codeId,
+              content: []
             }
           )
         }
+      },
+      // 获取用户数据
+      _getUserData (data) {
+        /**
+         * @data      为当前点击分组的信息   需要参数可以在data => obj取值
+         * @type {*[]}
+         */
+        var arrData = [
+          {
+            id: 101,
+            name: '王小虎1',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+          },
+          {
+            id: 201,
+            name: '王小虎2',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+          },
+          {
+            id: 301,
+            name: '王小虎3',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+          },
+          {
+            id: 401,
+            name: '王小虎4',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+          },
+          {
+            id: 501,
+            name: '王小虎5',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+
+          },
+          {
+            id: 601,
+            name: '王小虎6',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+          },
+          {
+            id: 701,
+            name: '王小虎7',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+          },
+          {
+            id: 801,
+            name: '王小虎8',
+            date: this.nweDate(),
+            address: '北京市朝阳区'
+          }
+        ]
+        this.userListData = arrData
+      },
+      // 添加用户
+      btnCreateUser (data, index) {
+        var _this = this
+        this.CreateUser = true      // 展示弹窗显示列表
+        this._getUserData(data)     // 调取请求数据的方法
+        this.CreateIndex = index    // 记录当前点击分组的索引值
+        // console.log(this.CreateIndex)
+        data.content.forEach((val, index) => {
+          _this.userListData.forEach((v, i) => {
+            if (v.id === val.id) {
+              _this.defaultIndex.push(i)
+            }
+          })
+        })
+      },
+      // 确认添加用户
+      btnUserData (data) {
+        console.log(data)
+        var _this = this
+        this.CreateUser = data.msg      // 隐藏弹窗显示列表
+        if (data.userObj.length !== 0) {
+          data.userObj.forEach((val, index) => {
+            _this.messages[_this.CreateIndex].content.push(val)
+          })
+        }
+      },
+      // 当前分组下选中的用户
+      newContent (data) {
+        this.GroupNewContent = data
+      },
+      // 删除用户
+      btnUser (data, index) {
+        var _this = this
+        this.GroupNewContent.forEach((val, u) => {
+          _this.messages[index].content.forEach((v, i) => {
+            if (val.id === v.id) {
+              _this.messages[index].content.splice(i, 1)
+            }
+          })
+        })
       }
       // EditGrouping () {
       //   var _this = this

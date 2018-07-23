@@ -215,6 +215,37 @@
       }
     },
     methods: {
+      open (data) {
+        this.$confirm(`<p><lable>您要发送的内容为：</lable><span>` + data + `</span></p>`, {
+          dangerouslyUseHTMLString: true,   // 是否采用HTML方式显示
+          confirmButtonText: '确定发送',
+          cancelButtonText: '取消发送',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            showClose: true,
+            type: 'success',
+            message: '发送成功!'
+          })
+        }).catch(() => {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            message: '已取消发送'
+          })
+        })
+      },
+      open1 () {
+        this.$alert('请输入内容后在发送', '您还没有输入内容', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `选择用户发送内容: ${action}`
+            })
+          }
+        })
+      },
       btnGrouping (data) {
         // alert('出发了选项卡')
         this.userData = data.treeUserData
@@ -227,7 +258,13 @@
       },
       // 向后端发送数据请求
       btnSend () {
-        console.log(this.sendMastion)
+        var data = this.sendMastion.content
+        if (data === '') {
+          this.open1()
+        } else {
+          this.open(data)
+          console.log(this.sendMastion.content)
+        }
       }
     }
   }

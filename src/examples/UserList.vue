@@ -4,7 +4,12 @@
     height="250"
     style="width: 100%"
     :default-sort = "{prop: 'date', order: 'descending'}"
+    @selection-change="changeFun"
   >
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
     <el-table-column
       type="index"
       label="序号"
@@ -37,7 +42,11 @@
     },
     data () {
       return {
-
+      }
+    },
+    methods: {
+      changeFun (data) {
+        this.$emit('new-content', data)
       }
     }
   }
