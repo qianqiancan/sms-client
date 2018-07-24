@@ -1,10 +1,10 @@
 <template>
   <section class="content">
-    <row>
-      <div class="col-md-12">
-        <user-header></user-header>
-      </div>
-    </row>
+    <!--<row>-->
+      <!--<div class="col-md-12">-->
+        <!--<user-header></user-header>-->
+      <!--</div>-->
+    <!--</row>-->
     <row>
       <div class="col-md-12 col-sm-12 col-xs-12" slot-scope='scope' style="margin-bottom: 20px;">
         <div class="col-md-6">
@@ -79,7 +79,7 @@
       </div>
     </row>
     <el-dialog title="新增用户" :visible.sync=" dialogFormVisible ">
-      <user-edit @btn-cacel="btnCacel" @btn-deter="btnCacel"></user-edit>
+      <user-edit @btn-cacel="btnCacel"></user-edit>
     </el-dialog>
   </section>
 
@@ -87,11 +87,11 @@
 
 <script>
   // 头部
-  import UserHeader from './UserHeader.vue'
+  // import UserHeader from './UserHeader.vue'
   import UserEdit from './UserEdit.vue'
   export default {
     components: {
-      'user-header': UserHeader,
+      // 'user-header': UserHeader,
       'user-edit': UserEdit
     },
     data: function () {
@@ -99,31 +99,32 @@
         dialogFormVisible: false,
         saveName: '编辑',
         saveMsg: true,
+        // 数据源
         tableData: [{
           id: 1,
           date1: '2016-05-02',
-          date2: '2016-05-02',
+          date2: new Date(),
           name: '王小虎',
           phone: '13333333333',
           delivery: false
         }, {
           id: 2,
           date1: '2016-05-04',
-          date2: '2016-05-04',
+          date2: new Date(),
           name: '王小虎',
           phone: '13222222222',
           delivery: false
         }, {
           id: 3,
           date1: '2016-05-01',
-          date2: '2016-05-01',
+          date2: new Date(),
           name: '王小虎',
           phone: '13111111111',
           delivery: false
         }, {
           id: 4,
           date1: '2016-05-03',
-          date2: '2016-05-03',
+          date2: new Date(),
           name: '王小虎',
           phone: '13444444444',
           delivery: false
@@ -148,17 +149,19 @@
     },
     methods: {
       btnCacel (obj) {
-        console.log(obj)
+        console.log('>>>>>>>>>>>>>>>>>>>.', Math.floor(Math.random() * 100 + 1))
         this.dialogFormVisible = obj.msg
         if (obj.data !== '') {
           this.tableData.push({
-            date: obj.data.date1,
+            date1: obj.data.date1,
+            date2: obj.data.date2,
             name: obj.data.name,
             phone: obj.data.phone,
             delivery: obj.data.delivery
           })
         }
       },
+      // 选中的元素【集合】
       changeFun (data) {
         console.log('val==>', data)
         this.editVal = data
@@ -173,6 +176,7 @@
           })
         })
       },
+      // 删除所选用户
       removeData () {
         var _this = this
         if (this.editVal.length !== 0) {
@@ -192,26 +196,28 @@
         }
       },
       btnFormVisible (data) {
-        console.log(this.editVal)
+        // console.log(this.editVal)
         let _this = this
         if (this.editVal.length !== 0) {
           // _this.saveMsg = !_this.saveMsg
           if (!_this.saveMsg) {
+            console.log('=========>', _this.editVal)
             _this.editVal.forEach((val, index) => {
               _this.tableData.forEach((v, i) => {
                 // 这里应取id 是每一行的数据id
                 if (val.phone === v.phone) {
-                  console.log(v.date2, v.name, v.phone)
+                  // console.log(v.date2, v.name, v.phone)
                   if (v.date2 !== null && v.name !== '' && v.phone !== '') {
                     v.delivery = false
                     _this.saveMsg = true
                     _this.saveName = '编辑'
                     var date = v.date2
-                    console.log('0' + (date.getMonth() + 1))
+                    // console.log('0' + (date.getMonth() + 1))
                     var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
                     var rdata = date.getDate() > 9 ? date.getDate() : '0' + date.getDate()
                     v.date1 = date.getFullYear() + '-' + month + '-' + rdata
                   } else {
+                    alert(2)
                     v.delivery = true
                     _this.saveMsg = false
                     _this.saveName = '保存'

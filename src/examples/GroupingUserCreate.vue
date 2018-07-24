@@ -49,8 +49,8 @@
 <script>
   export default {
     props: {
-      defaultIndex: [],   // 默认显示第几个勾选中
-      userList: []      // 数据
+      defaultIndex: {},   // 默认显示第几个勾选中
+      userList: {}      // 数据
     },
     data: function () {
       return {
@@ -61,10 +61,9 @@
       changeFun (data) {
         this.arrUserData = data
       },
+      // 添加用户
       CreateData (mun) {
         this.$emit('btn-user-data', { msg: false, userObj: mun === 1 ? this.arrUserData : [] })
-        this.userList = []
-        this.arrUserData = []
       },
       // 默认勾选方法
       checked () {

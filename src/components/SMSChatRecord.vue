@@ -47,6 +47,7 @@
       // name: 'sms-chat-record',
     data () {
       return {
+        contacts: [],
         talkList: [
           {
             name: 'Alexander Pierce',

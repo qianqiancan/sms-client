@@ -1,21 +1,21 @@
 <template>
   <div>
-    <row>
-      <div class="col-md-12">
-        <user-header></user-header>
-      </div>
-    </row>
+    <!--<row>-->
+      <!--<div class="col-md-12">-->
+        <!--<user-header></user-header>-->
+      <!--</div>-->
+    <!--</row>-->
     <!--<row>-->
       <!--<div class="col-md-4">-->
         <row>
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="col-md-6">
-              <el-button type="success" @click="CreateEdit = true">添加</el-button>
+              <el-button type="success" @click="CreateEdit = true">添加分组</el-button>
               <!--<el-button type="success" @click="EditGrouping">编辑</el-button>-->
             </div>
             <div class="text-right col-md-6">
-              <el-button type="danger" @click="removeList" class="text-right">删除</el-button>
-              <el-button type="danger" @click="messages = []" class="text-right">全部删除</el-button>
+              <el-button type="danger" @click="removeList" class="text-right">删除分组</el-button>
+              <el-button type="danger" @click="messages = []" class="text-right">全部删除分组</el-button>
             </div>
           </div>
           <div class="col-md-12 col-sm-12 col-xs-12 ndy-border">
@@ -27,10 +27,10 @@
         <el-collapse accordion>
           <el-collapse-item v-for="(item, index) in messages" style="padding-top: 20px;">
             <template slot="title">
-              <div @click="btnUsershow(item)" v-model="neWshow" class="demo-color-box bg-success ndy-padding" :class="item.bgColor">
+              <div @click="btnUsershow(item)" class="demo-color-box bg-success ndy-padding" :class="item.bgColor">
                 <el-checkbox @change="handleCheckedCitiesChange(item)" v-model="item.neWshow"></el-checkbox>
                 <span v-show='!item.delivery'>{{item.name}}</span>
-                <el-button type="danger" @click="" class="pull-right" @click.stop style="margin-right: 8px; margin-top: 6px;" @click="item.content = []">全部删除</el-button>
+                <el-button type="danger" @click="" class="pull-right" @click.stop style="margin-right: 8px; margin-top: 6px;" @click="item.content = []">全部删除用户</el-button>
                 <el-button type="danger" @click="btnUser(item, index)" class="pull-right" @click.stop style="margin-right: 8px; margin-top: 6px;">删除用户</el-button>
                 <el-button type="primary" @click="btnCreateUser(item, index)" class="pull-right" @click.stop style="margin-right: 0px; margin-top: 6px;">添加用户</el-button>
                 <!--<el-form v-show='item.delivery' :model="item" :rules="rules" ref="create">-->
@@ -52,7 +52,6 @@
       <!--<edit-grouping :formVal="newmessages"></edit-grouping>-->
     <!--</el-dialog>-->
     <el-dialog title="新增用户" :visible.sync="CreateUser ">
-      <!--@btn-cacel="btnCacel" @btn-deter="btnCacel"-->
       <grouping-user-create :userList="userListData" :defaultIndex="defaultIndex" @btn-user-data="btnUserData"></grouping-user-create>
     </el-dialog>
   </div>
@@ -60,7 +59,7 @@
 
 <script>
   // 头部
-  import UserHeader from './UserHeader.vue'
+  // import UserHeader from './UserHeader.vue'
   // 编辑分组
   import EditGrouping from './EditGrouping.vue'
   // 添加分组
@@ -72,7 +71,7 @@
 
   export default {
     components: {
-      'user-header': UserHeader,
+      // 'user-header': UserHeader,
       'edit-grouping': EditGrouping,
       'create-grouping': CreateGrouping,
       'user-list': UserList,
@@ -85,7 +84,7 @@
         messrMsg: false,    // 添加/删除用户状态
         CreateEdit: false,   // 添加分组
         CreateUser: false,  // 添加用户
-        isIndeterminate: false,   // 全选的不确定状态
+        isIndeterminate: true,   // 全选的不确定状态
         checkAll: false,     // 全选状态
         show2: true,
         activeName: 1,

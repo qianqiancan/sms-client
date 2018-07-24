@@ -1,10 +1,10 @@
 <template>
   <div>
-    <row>
-      <div class="col-md-12">
-        <user-header></user-header>
-      </div>
-    </row>
+    <!--<row>-->
+      <!--<div class="col-md-12">-->
+        <!--<user-header></user-header>-->
+      <!--</div>-->
+    <!--</row>-->
     <row>
       <div class="col-md-4 demo-color-box bg-warning">
         <el-tree
@@ -43,12 +43,12 @@
 
 <script>
   // 头部
-  import UserHeader from './UserHeader.vue'
+  // import UserHeader from './UserHeader.vue'
   import VATextareaGroup from '../components/VATextareaGroup'
   import UserDisplay from './UserDisplay.vue'
   export default {
     components: {
-      'user-header': UserHeader,
+      // 'user-header': UserHeader,
       'va-textarea-group': VATextareaGroup,
       'user-display': UserDisplay
     },
